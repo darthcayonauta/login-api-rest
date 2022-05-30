@@ -26,13 +26,18 @@ const enviarData = async ( url,data )=>{
 function Login(props) {
 
     const [error,setError] = useState(null);
+    const [espera,setEspera] = useState(false);
 
     const refUsuario    = useRef(null);
     const refClave      = useRef(null);
+
+
     
     //captura data del formulario
     const handleLogin = async ()=>{
           
+        setEspera(true);
+
         const usuario = refUsuario.current.value;
         const clave   = refClave.current.value;
 
@@ -43,7 +48,7 @@ function Login(props) {
 
         props.acceder( respuestaJson.conectado );
         setError(respuestaJson.error);
-
+        setEspera(false);
     }
   
     return (
@@ -96,6 +101,7 @@ function Login(props) {
 
               <button 
                 onClick = {handleLogin}
+                disabled = {espera}
                 className="btn btn-info btn-lg btn-block">Acceder</button>
               <div className="card-footer text-center">
                 <span> ¿Olvidó su clave?</span> <a href="#">Recuperar</a>
